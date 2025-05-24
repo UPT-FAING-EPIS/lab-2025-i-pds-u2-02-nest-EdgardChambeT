@@ -31,7 +31,7 @@ jobs:
 
     # 3. Autenticación para publicar en GitHub Packages
     - name: Configure NPM Authentication
-      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHPAT }}" > ~/.npmrc
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
 
     # 4. Instalar dependencias
     - name: Install Dependencies
