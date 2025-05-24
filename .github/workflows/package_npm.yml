@@ -14,43 +14,50 @@ jobs:
 
     strategy:
       matrix:
-        app: [customer-app, notifications]
+        app:
+          - customer-app
+          - notifications
 
     steps:
-    - name: Checkout repository
+    # 1. Clonar el repositorio
+    - name: Checkout Code
       uses: actions/checkout@v3
 
+    # 2. Configurar Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 20
-        registry-url: https://npm.pkg.github.com/
 
-    - name: Install dependencies
+    # 3. Configurar autenticación para npm
+    - name: Configure NPM Authentication
+      run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHPAT }}" > ~/.npmrc
+
+    # 4. Instalar dependencias
+    - name: Install Dependencies
       run: |
         cd ${{ matrix.app }}
         npm install
 
+    # 5. Ejecutar pruebas unitarias
     - name: Run Unit Tests
       run: |
         cd ${{ matrix.app }}
         npm test -- --coverage
 
-    - name: Set package name and publish
+    # 6. Establecer nombre del paquete y publicar
+    - name: Publish NPM Package
       run: |
         cd ${{ matrix.app }}
         
-        # Establece el nombre del paquete según el proyecto
+        # Establecer nombre personalizado
         if [ "${{ matrix.app }}" = "customer-app" ]; then
           npm pkg set name="@${{ github.repository_owner }}/customer-app-chambe"
         else
           npm pkg set name="@${{ github.repository_owner }}/notifications-chambe"
         fi
 
-        # Incrementa versión
         npm version patch
-
-        # Publicar en GitHub Packages
         npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
