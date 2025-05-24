@@ -1,0 +1,7 @@
+{
+  "tsconfig": "tsconfig.json",
+  "output": "../documentation",
+  "include": ["src", "libs/domain/src"],
+  "exclude": ["node_modules", "dist", "documentation"],
+  "exportFormat": "html"
+}
