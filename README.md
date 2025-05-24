@@ -456,9 +456,17 @@ npx @compodoc/compodoc -p tsconfig.json -s
 
 ![alt text](image-7.png)
 
+![alt text](image-8.png)
 
-1. Generar una automatización de nombre .github/workflows/package_npm.yml (Github Workflow) que ejecute:
+![alt text](image-9.png)
+
+![alt text](image-10.png)
+
+![alt text](image-11.png)
+
+
+2. Generar una automatización de nombre .github/workflows/package_npm.yml (Github Workflow) que ejecute:
    * Pruebas unitarias y reporte de pruebas automatizadas
    * Realice el analisis con SonarCloud.
    * Contruya los paquetes con nombre notifications_[apellido] y customer-app_[apellido] y lo publique en Github Packages
-2. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que contruya la version (release) del paquete y publique en Github Releases.
+3. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que contruya la version (release) del paquete y publique en Github Releases.

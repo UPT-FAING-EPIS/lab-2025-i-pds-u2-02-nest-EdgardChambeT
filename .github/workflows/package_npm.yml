@@ -1,0 +1,56 @@
+name: Package and Publish NPM
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [customer-app, notifications]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        registry-url: https://npm.pkg.github.com/
+
+    - name: Install dependencies
+      run: |
+        cd ${{ matrix.app }}
+        npm install
+
+    - name: Run Unit Tests
+      run: |
+        cd ${{ matrix.app }}
+        npm test -- --coverage
+
+    - name: Set package name and publish
+      run: |
+        cd ${{ matrix.app }}
+        
+        # Establece el nombre del paquete según el proyecto
+        if [ "${{ matrix.app }}" = "customer-app" ]; then
+          npm pkg set name="@${{ github.repository_owner }}/customer-app-chambe"
+        else
+          npm pkg set name="@${{ github.repository_owner }}/notifications-chambe"
+        fi
+
+        # Incrementa versión
+        npm version patch
+
+        # Publicar en GitHub Packages
+        npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GHPAT }}
