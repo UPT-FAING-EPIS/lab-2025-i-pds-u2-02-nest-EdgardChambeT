@@ -32,7 +32,7 @@ jobs:
         cd customer-app
         npx @compodoc/compodoc -p tsconfig.json -d documentation
 
-    # 5. Desplegar la documentación en GitHub Pages (con limpieza)
+    
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
