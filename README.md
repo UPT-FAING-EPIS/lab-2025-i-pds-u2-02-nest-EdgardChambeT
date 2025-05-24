@@ -451,7 +451,12 @@ npx @compodoc/compodoc -p tsconfig.json -s
 ![alt text](image-5.png)
 
 - Documentacion de notifications
-  
+
+![alt text](image-6.png)
+
+![alt text](image-7.png)
+
+
 1. Generar una automatización de nombre .github/workflows/package_npm.yml (Github Workflow) que ejecute:
    * Pruebas unitarias y reporte de pruebas automatizadas
    * Realice el analisis con SonarCloud.
