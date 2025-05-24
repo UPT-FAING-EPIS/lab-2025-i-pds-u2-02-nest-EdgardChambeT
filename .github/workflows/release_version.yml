@@ -1,0 +1,59 @@
+name: Release Version
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        app: [customer-app, notifications]
+
+    steps:
+    # 1. Clonar el repositorio
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Configurar Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    # 3. Instalar dependencias
+    - name: Install Dependencies
+      run: |
+        cd ${{ matrix.app }}
+        npm install
+        npm run build
+
+    # 4. Crear un nuevo tag de versión
+    - name: Create Git Tag
+      id: create_tag
+      run: |
+        cd ${{ matrix.app }}
+        VERSION=$(node -p "require('./package.json').version")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        TAG="${{ matrix.app }}-v$VERSION"
+        echo "TAG=$TAG" >> $GITHUB_ENV
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git tag -a "$TAG" -m "Release $TAG"
+        git push origin "$TAG"
+
+    # 5. Crear el Release en GitHub
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "${{ env.TAG }}"
+        name: "Release ${{ env.TAG }}"
+        body: "Nueva versión del paquete `${{ matrix.app }}` publicada."
+        files: |
+          ${{ matrix.app }}/dist/**
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

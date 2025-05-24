@@ -469,4 +469,11 @@ npx @compodoc/compodoc -p tsconfig.json -s
    * Pruebas unitarias y reporte de pruebas automatizadas
    * Realice el analisis con SonarCloud.
    * Contruya los paquetes con nombre notifications_[apellido] y customer-app_[apellido] y lo publique en Github Packages
+
+![alt text](image-12.png)
+
+![alt text](image-13.png)
+
+![alt text](image-14.png)
+
 3. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que contruya la version (release) del paquete y publique en Github Releases.
