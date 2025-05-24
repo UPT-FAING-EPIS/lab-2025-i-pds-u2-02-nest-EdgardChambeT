@@ -39,7 +39,6 @@ jobs:
         cd ${{ matrix.app }}
         npm install
 
-    # 5. Ejecutar pruebas unitarias
     - name: Run Unit Tests
       run: |
         cd ${{ matrix.app }}
