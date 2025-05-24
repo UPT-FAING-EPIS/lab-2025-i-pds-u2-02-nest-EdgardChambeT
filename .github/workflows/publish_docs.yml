@@ -26,7 +26,6 @@ jobs:
         cd customer-app
         npm install
 
-    # 4. Generar la documentación con Compodoc
     - name: Generate Documentation
       run: |
         cd customer-app
