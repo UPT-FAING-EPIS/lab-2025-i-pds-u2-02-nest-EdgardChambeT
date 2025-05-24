@@ -28,7 +28,7 @@ jobs:
 
     # 4. Limpiar la carpeta de documentación
     - name: Clean Previous Documentation
-      run: rm -rf ./documentation/*
+      run: rm -rf customer-app/documentation/*
 
     # 5. Generar la documentación usando compodoc.json
     - name: Generate Documentation
