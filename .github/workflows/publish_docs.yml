@@ -39,7 +39,7 @@ jobs:
     # 6. Mover archivos a la raíz de gh-pages
     - name: Move Files to Root
       run: |
-        mv ./documentation/* .
+        mv customer-app/documentation/* .
 
     # 7. Desplegar en GitHub Pages
     - name: Deploy to GitHub Pages
