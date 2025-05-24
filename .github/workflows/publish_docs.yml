@@ -26,13 +26,13 @@ jobs:
         cd customer-app
         npm install
 
-    # 4. Generar la documentación usando Compodoc
+    # 4. Generar la documentación con Compodoc
     - name: Generate Documentation
       run: |
         cd customer-app
         npx @compodoc/compodoc -p tsconfig.json -d documentation
 
-    # 5. Desplegar en GitHub Pages
+    # 5. Desplegar la documentación en GitHub Pages (con limpieza)
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -40,3 +40,4 @@ jobs:
         publish_branch: gh-pages
         publish_dir: customer-app/documentation
         enable_jekyll: false
+        force_orphan: true
