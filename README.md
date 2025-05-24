@@ -477,3 +477,5 @@ npx @compodoc/compodoc -p tsconfig.json -s
 ![alt text](image-14.png)
 
 3. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que contruya la version (release) del paquete y publique en Github Releases.
+
+![alt text](image-15.png)
