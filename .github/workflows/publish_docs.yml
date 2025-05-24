@@ -26,27 +26,18 @@ jobs:
         cd notifications
         npm install
 
-    # 4. Limpiar la carpeta de documentación
-    - name: Clean Previous Documentation
-      run: rm -rf ./documentation/*
-
-    # 5. Generar la documentación usando compodoc.json
+    # 4. Generar la documentación con Compodoc
     - name: Generate Documentation
       run: |
         cd notifications
-        npx @compodoc/compodoc -c compodoc.json
+        npx @compodoc/compodoc -p tsconfig.json -d documentation
 
-    # 6. Mover archivos a la raíz de gh-pages
-    - name: Move Files to Root
-      run: |
-        mv ./documentation/* .
-
-    # 7. Desplegar en GitHub Pages
+    # 5. Desplegar la documentación en GitHub Pages (con limpieza)
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_branch: gh-pages
-        publish_dir: .
-        keep_files: true
-        enable_jekyll: false  # Desactiva Jekyll para que GitHub Pages no ignore archivos importantes
+        publish_dir: notifications/documentation
+        enable_jekyll: false
+        force_orphan: true
