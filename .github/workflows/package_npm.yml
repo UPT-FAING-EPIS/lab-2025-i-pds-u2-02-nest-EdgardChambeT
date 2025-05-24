@@ -29,7 +29,7 @@ jobs:
       with:
         node-version: 20
 
-    # 3. Configurar autenticación para npm
+    # 3. Autenticación para publicar en GitHub Packages
     - name: Configure NPM Authentication
       run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GHPAT }}" > ~/.npmrc
 
@@ -45,19 +45,25 @@ jobs:
         cd ${{ matrix.app }}
         npm test -- --coverage
 
-    # 6. Establecer nombre del paquete y publicar
-    - name: Publish NPM Package
+    # 6. Cambiar nombre del paquete, versionar y publicar en GitHub Packages
+    - name: Publish NPM Package to GitHub Packages
       run: |
         cd ${{ matrix.app }}
-        
-        # Establecer nombre personalizado
+
+        # Establecer nombre personalizado del paquete
         if [ "${{ matrix.app }}" = "customer-app" ]; then
-          npm pkg set name="@${{ github.repository_owner }}/customer-app-chambe"
+          npm pkg set name="@UPT-FAING-EPIS/customer-app-chambe"
         else
-          npm pkg set name="@${{ github.repository_owner }}/notifications-chambe"
+          npm pkg set name="@UPT-FAING-EPIS/notifications-chambe"
         fi
 
+        # Forzar configuración para publicar en GitHub Packages
+        npm pkg set publishConfig.registry="https://npm.pkg.github.com/"
+
+        # Incrementar versión automáticamente (parche)
         npm version patch
-        npm publish
+
+        # Publicar en GitHub Packages
+        npm publish --registry=https://npm.pkg.github.com/
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
