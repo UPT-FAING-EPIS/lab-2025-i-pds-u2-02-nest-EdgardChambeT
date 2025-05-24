@@ -1,0 +1,52 @@
+name: Deploy Compodoc Documentation to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Clonar el repositorio
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    # 2. Configurar Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    # 3. Instalar dependencias
+    - name: Install Dependencies
+      run: |
+        cd customer-app
+        npm install
+
+    # 4. Limpiar la carpeta de documentación
+    - name: Clean Previous Documentation
+      run: rm -rf ./documentation/*
+
+    # 5. Generar la documentación usando compodoc.json
+    - name: Generate Documentation
+      run: |
+        cd customer-app
+        npx @compodoc/compodoc -c compodoc.json
+
+    # 6. Mover archivos a la raíz de gh-pages
+    - name: Move Files to Root
+      run: |
+        mv ./documentation/* .
+
+    # 7. Desplegar en GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: .
+        keep_files: true
+        enable_jekyll: false  # Desactiva Jekyll para que GitHub Pages no ignore archivos importantes
