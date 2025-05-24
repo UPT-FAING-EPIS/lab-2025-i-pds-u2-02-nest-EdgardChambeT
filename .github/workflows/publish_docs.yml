@@ -23,7 +23,7 @@ jobs:
     # 3. Instalar dependencias
     - name: Install Dependencies
       run: |
-        cd customer-app
+        cd notifications
         npm install
 
     # 4. Limpiar la carpeta de documentación
@@ -33,7 +33,7 @@ jobs:
     # 5. Generar la documentación usando compodoc.json
     - name: Generate Documentation
       run: |
-        cd customer-app
+        cd notifications
         npx @compodoc/compodoc -c compodoc.json
 
     # 6. Mover archivos a la raíz de gh-pages

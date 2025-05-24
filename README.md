@@ -438,6 +438,18 @@ npx @compodoc/compodoc -p tsconfig.json -s
 
 - Documentacion de Customer-app
   
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
+
 - Documentacion de notifications
   
 1. Generar una automatización de nombre .github/workflows/package_npm.yml (Github Workflow) que ejecute:

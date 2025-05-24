@@ -25,5 +25,7 @@
         "libs/domain/src/*"
       ]
     }
-  }
+  },
+    "include": ["src/**/*", "libs/domain/src/**/*"],
+  "exclude": ["node_modules", "dist", "docs", "documentation"]
 }
